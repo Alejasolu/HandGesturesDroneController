@@ -2,7 +2,8 @@ import matplotlib
 matplotlib.use("TkAgg")
 from utils import detector_utils as detector_utils
 import tkinter as tk
-from ScrolledText import ScrolledText
+from tkinter.scrolledtext import ScrolledText
+#from ScrolledText import ScrolledText
 import cv2
 import tensorflow as tf
 import threading
@@ -13,7 +14,7 @@ from PIL import Image
 from PIL import ImageTk
 import matplotlib.animation as animation
 import numpy as np
-import Queue
+import queue
 from autopilot.autopilot import autopilot
 
 
@@ -138,8 +139,8 @@ class hand_gesture_detector:
 		self.first_hand_shape = -1
 		self.second_hand_shape = -1
 
-		self.gestures_queue_first = Queue.Queue()
-		self.gestures_queue_second = Queue.Queue()
+		self.gestures_queue_first = queue.queue()
+		self.gestures_queue_second = queue.queue()
 
 		self.is_connected = False
 		self.arm_pattern = [1, 0, 1]
@@ -210,7 +211,7 @@ class hand_gesture_detector:
 					if len(self.autopilot_move_x_y_stack)>0:
 						(x,y,z)=self.autopilot_move_x_y_stack.pop()
 						self.autopilot_obj.move(x/2,y/2,z/2,1)
-						print 'move ',x,y,z
+						print ('move ',x,y,z)
 				self.scrolled_text.insert(tk.END, self.autopilot_log.pop()+"\n", 'normal')
 
 
@@ -252,16 +253,18 @@ class hand_gesture_detector:
 				tmp_boxes = []
 
 				for i in range(self.num_hands_detect):
-				   if (scores[i] > self.score_thresh):
-					   tmp_scores.append(scores[i])
-					   tmp_classes.append(classes[i])
-					   tmp_boxes.append(boxes[i])
 
-				#filter by score
+					if scores[i] > self.score_thresh:
+						tmp_scores.append(scores[i])
+						tmp_classes.append(classes[i])
+						tmp_boxes.append(boxes[i])
+
+				# Filter by score
 				filtered_scores = []
 				filtered_classes = []
 				filtered_boxes = []
-				# image_np=detector_utils.draw_left_arrow(image_np)
+				# image_np = detector_utils.draw_left_arrow(image_np)
+
 				for i in range(len(tmp_scores)):
 					redundant = False
 					(left_1, right_1, top_1, bottom_1) = (tmp_boxes[i][1] * im_width, tmp_boxes[i][3] * im_width,
@@ -278,9 +281,9 @@ class hand_gesture_detector:
 						if w<0 or h<0:
 							continue
 						else:
-							print 'There is intersection'
+							print('There is intersection')
 							if w*h> 0.8*area_1:
-								print 'redundant'
+								print ('redundant')
 								self.log.insert(0,"Remove redundant detection!")
 								redundant = True
 								break
@@ -292,14 +295,14 @@ class hand_gesture_detector:
 				##If No hands appeared for 3 frames, reset the pattern Queues
 				if len(filtered_scores)==0:
 					self.num_of_frames_without_hands+=1
-					print 'No Hands...'
+					print ('No Hands...')
 				else:
 					self.num_of_frames_without_hands=0
 
 				if self.num_of_frames_without_hands >3:
 					self.gestures_queue_second.queue.clear()
 					self.gestures_queue_first.queue.clear()
-					print 'Reset Patterns...'
+					print ('Reset Patterns...')
 					for _ in range(3):
 						self.gestures_queue_second.put(-1)
 						self.gestures_queue_first.put(-1)
@@ -312,7 +315,7 @@ class hand_gesture_detector:
 				# Lock wheel for 3 frames in case of noise
 				if self.lock_wheel and self.num_of_frames_lock_wheel<3:
 					if len(filtered_scores)==2 and ((filtered_classes[0]==6.0 and not filtered_classes[1]==6.0) or (not filtered_classes[0]==6.0 and filtered_classes[1]==6.0)):
-						print 'LOCK 2 HAND...'
+						print ('LOCK 2 HAND...')
 						self.num_of_frames_lock_wheel+=1
 						if self.num_of_frames_lock_wheel>=3:
 							self.lock_wheel = False
@@ -328,7 +331,7 @@ class hand_gesture_detector:
 						# 	image_np = detector_utils.draw_steering_wheel(image_np,self.second_sample_points_xy[0][1]-self.first_sample_points_xy[0][1])
 					elif len(filtered_scores)==1 and filtered_classes[0]==6.0:
 							image_np = detector_utils.draw_steering_wheel(image_np,0)
-							print 'LOCK 1 HAND...'
+							print ('LOCK 1 HAND...')
 							self.num_of_frames_lock_wheel+=1
 							if self.num_of_frames_lock_wheel>=3:
 								self.lock_wheel = False
@@ -360,7 +363,7 @@ class hand_gesture_detector:
 							self.gestures_queue_first.get()
 							self.gestures_queue_first.put(detector_utils.is_hand_opened(filtered_classes[0]))
 							self.same_hand_shape_counter=0
-							print list(self.gestures_queue_first.queue)
+							print (list(self.gestures_queue_first.queue))
 							if detector_utils.check_pattern(self.gestures_queue_first.queue,self.arm_pattern,self.arm_pattern):
 								global control_command
 								self.autopilot_sending_msgs_stack.insert(0,control_command['ARM_TAKEOFF'])
@@ -372,7 +375,7 @@ class hand_gesture_detector:
 
 					if self.same_hand_shape_counter >4:
 						self.same_hand_shape_counter=0
-						print 'Reset Patterns because of latency...'
+						print ('Reset Patterns because of latency...')
 						self.gestures_queue_first.queue.clear()
 						for j in range(3):
 							self.gestures_queue_first.put(-1)
@@ -639,7 +642,7 @@ class hand_gesture_detector:
 				# now = datetime.datetime.now()
 				# cv2.imwrite('/Users/Soubhi/Desktop/results/'+str(now.second)+'.png',image_np)
 
-		except RuntimeError, e:
+		except RuntimeError as e:
 			print("[INFO] caught a RuntimeError",str(e))
 
 

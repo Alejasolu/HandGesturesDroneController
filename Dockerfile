@@ -1,5 +1,7 @@
 # Use an official Python runtime as a parent image
-FROM python:2.7
+#FROM python:2.7 this version is already obsolet so we changed to 3.9
+
+FROM python:3.9
 
 LABEL maintainer="Soubhi Hadri <soubhi.hadri@gmail.com>"
 
