@@ -17,8 +17,8 @@ import numpy as np
 import queue
 from autopilot.autopilot import autopilot
 
-
-
+# Global declaration moved to the top
+global control_command
 detection_graph, sess = detector_utils.load_inference_graph()
 
 #Control Command
@@ -523,7 +523,7 @@ class hand_gesture_detector:
 
 
 					#show Wheel when shapes: close close
-					global control_command
+					self.control_command
 					if  not detector_utils.is_hand_opened(self.first_hand_shape) and not detector_utils.is_hand_opened(self.second_hand_shape):
 						self.lock_wheel = True
 						self.num_of_frames_lock_wheel=0

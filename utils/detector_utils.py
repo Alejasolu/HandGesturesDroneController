@@ -7,7 +7,7 @@ import os
 from threading import Thread
 from datetime import datetime
 import cv2
-from utils import label_map_util
+import label_map_util
 from collections import defaultdict
 from matplotlib import pyplot as plt
 from scipy.cluster.vq import vq, kmeans
@@ -108,7 +108,7 @@ def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes ,classes , i
             mean_h = np.mean(box_area[(box_area.shape[0]/2):(box_area.shape[0]/2)+80,(box_area.shape[1]/2)-20:(box_area.shape[1]/2)+20,0])#=255
             mean_s = np.mean(box_area[(box_area.shape[0]/2):(box_area.shape[0]/2)+80,(box_area.shape[1]/2)-20:(box_area.shape[1]/2)+20,1])
             mean_v = np.mean(box_area[(box_area.shape[0]/2):(box_area.shape[0]/2)+80,(box_area.shape[1]/2)-20:(box_area.shape[1]/2)+20,2])
-            print 'mean : ',mean_h,mean_s,mean_v
+            print ('mean : ',mean_h,mean_s,mean_v)
 
 
             min_h = np.min(box_area[(box_area.shape[0]/2):(box_area.shape[0]/2)+80,(box_area.shape[1]/2)-20:(box_area.shape[1]/2)+20,0])#=255
@@ -342,7 +342,7 @@ def do_cluster(hsv_image, K, channels):
     codebook, distortion = kmeans(np.array(cluster_data[:,0:channels], dtype=np.float), K)
     # takes the final time
     t1 = t.time()
-    print "Clusterization took %0.5f seconds" % (t1-t0)
+    print ("Clusterization took %0.5f seconds" % (t1-t0))
     
     
     # calculates the total amount of pixels
