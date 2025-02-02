@@ -1,0 +1,9 @@
+services:
+  dev_container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dev_container
+    volumes:
+      - ..:/workspace
+    tty: true

@@ -6,10 +6,10 @@ FROM python:3.9
 LABEL maintainer="Soubhi Hadri <soubhi.hadri@gmail.com>"
 
 # Set the working directory to /DHC app
-WORKDIR /DHC_app
+WORKDIR /workspace
 
-# Copy the current directory contents into the container at /app
-ADD . /DHC_app
+# Copy requirements.txt in the current directory to the container
+COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
@@ -21,4 +21,4 @@ EXPOSE 80
 ENV NAME=World
 
 # Run hand_gestures_detector.py when the container launches
-CMD ["python", "hand_gestures_detector.py"]
+CMD ["bash"]

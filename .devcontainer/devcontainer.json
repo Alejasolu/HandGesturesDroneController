@@ -1,0 +1,6 @@
+{
+    "name": "HandGesturesDroneController",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "dev_container",
+    "workspaceFolder": "/workspace"
+}
