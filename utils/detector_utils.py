@@ -4,10 +4,11 @@ import numpy as np
 import sys
 import tensorflow as tf
 import os
+
 from threading import Thread
 from datetime import datetime
 import cv2
-import label_map_util
+from utils import label_map_util 
 from collections import defaultdict
 from matplotlib import pyplot as plt
 from scipy.cluster.vq import vq, kmeans

@@ -4,3 +4,4 @@ matplotlib
 Pillow
 scipy
 dronekit
+protobuf==3.20.3,<4.21.0
