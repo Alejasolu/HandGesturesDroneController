@@ -1,6 +1,7 @@
 import matplotlib
 matplotlib.use("TkAgg")
 from utils import detector_utils as detector_utils
+
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 #from ScrolledText import ScrolledText
