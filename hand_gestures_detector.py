@@ -140,8 +140,8 @@ class hand_gesture_detector:
 		self.first_hand_shape = -1
 		self.second_hand_shape = -1
 
-		self.gestures_queue_first = queue.queue()
-		self.gestures_queue_second = queue.queue()
+		self.gestures_queue_first = queue.Queue()
+		self.gestures_queue_second = queue.Queue()
 
 		self.is_connected = False
 		self.arm_pattern = [1, 0, 1]
