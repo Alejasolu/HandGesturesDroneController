@@ -6,4 +6,14 @@ services:
     container_name: dev_container
     volumes:
       - ..:/workspace
+      - /dev:/dev
+    devices:
+      - /dev:/dev
     tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]

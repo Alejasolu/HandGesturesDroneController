@@ -649,12 +649,15 @@ class hand_gesture_detector:
 
 if __name__ == '__main__':
 	video_stream = cv2.VideoCapture(0)
-	video_stream.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
-	video_stream.set(cv2.CAP_PROP_FRAME_HEIGHT, 800)
+	video_stream.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
+	video_stream.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
 	start_time = datetime.datetime.now()
 	num_frames = 0
 
+	if not video_stream.isOpened():
+		print("Cannot open camera")
+		exit()
 
 	# start the app
 	hgd = hand_gesture_detector(video_stream)
