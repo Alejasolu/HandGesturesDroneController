@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y\
         ffmpeg \
         libsm6 \
         libxext6 \
+        protobuf-compiler \
         python3-tk \
         && rm -rf /var/lib/apt/lists/*
         #----

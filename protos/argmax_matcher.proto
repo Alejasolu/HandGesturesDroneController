@@ -1,6 +1,7 @@
 syntax = "proto2";
 
-package object_detection.protos;
+//object_detection.protos
+package protos;
 
 // Configuration proto for ArgMaxMatcher. See
 // matchers/argmax_matcher.py for details.
