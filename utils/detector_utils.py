@@ -208,7 +208,7 @@ def is_hand_opened(hand_class):
 
 def draw_steering_wheel(img,rotation):
     raduis = min(img.shape[0],img.shape[1]);
-    raduis = (raduis - raduis/6)/2;
+    raduis = int((raduis - raduis/6)/2);
     wheel_color = (200,200,200);
     shift_from_center = 55
     # rotation = np.abs(rotation)
