@@ -5,6 +5,9 @@ FROM python:3.9
 
 LABEL maintainer="Soubhi Hadri <soubhi.hadri@gmail.com>"
 
+# Install OS-level dependencies including libGL
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
 # Set the working directory to /DHC app
 WORKDIR /DHC_app
 

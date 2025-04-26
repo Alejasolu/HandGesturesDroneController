@@ -524,7 +524,7 @@ class hand_gesture_detector:
 
 
 					#show Wheel when shapes: close close
-					global control_command
+					#global control_command
 					if  not detector_utils.is_hand_opened(self.first_hand_shape) and not detector_utils.is_hand_opened(self.second_hand_shape):
 						self.lock_wheel = True
 						self.num_of_frames_lock_wheel=0
